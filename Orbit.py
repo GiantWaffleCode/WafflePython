@@ -69,10 +69,16 @@ def orbit_burn():
         vessel.control.throttle = 1
     vessel.control.throttle = 0
 
+# Burn to E=0
 
-launch()
-gravity_turn()
-vessel.control.activate_next_stage()
-vessel.control.activate_next_stage()
-orbit_burn()
-print("Done!")
+def main_sequence(clicked):
+    if clicked:
+        print(clicked)
+        launch()
+        gravity_turn()
+        vessel.control.activate_next_stage()
+        vessel.control.activate_next_stage()
+        orbit_burn()
+        print("Done!")
+    else:
+        print("Waiting for Button")

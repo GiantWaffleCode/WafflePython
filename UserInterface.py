@@ -52,6 +52,7 @@ def write_text(name, cord):  # Creates Text Objects
 text_roll = write_text("Roll", (0, -20))  # Text Objects i want
 text_pitch = write_text("Pitch", (0, -40))
 text_heading = write_text("Heading", (0, -60))
+text_twr = write_text("TWR: Fix this Alan", (0, -80))
 
 text_mission_time_label = write_text("Mission Time", (0, 100))
 text_mission_time = write_text("T ", (0, 75))
@@ -72,5 +73,7 @@ while True:
     text_pitch.content = "Pitch: " + str(round(vessel_pitch, 1))
     vessel_heading = vessel.flight().heading
     text_heading.content = "Yaw: " + str(round(vessel_heading, 1))
+    vessel_twr = Orbit.twr()
+    text_twr.content = "TWR: "+ str(round(vessel_twr, 3))
     text_mission_time.content = "T: " + time.strftime('%H:%M:%S', time.gmtime(vessel.met))
     time.sleep(0.1)

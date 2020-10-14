@@ -1,22 +1,24 @@
 import krpc
 import time
+import math
 
 conn = krpc.connect(name="DrawingTest")
 vessel = conn.space_center.active_vessel
-ship_frame = vessel.reference_frame
-start = [0, 0, 0]
-end = [0, 0, 0]
 
-while True:
-    for i in range(0, 59, 5):
-        conn.drawing.clear(True)
-        start[2] = i
-        end[2] = i + 5
-        conn.drawing.add_line(start, end, ship_frame, visible=True)
-        conn.drawing.add_text("X", ship_frame, (0, 0, 0), (0, 1, 0, 0), True)
-        time.sleep(.1)
+apo1 = vessel.orbit.speed
+print(apo1)
+apo2 = vessel.orbit.orbital_speed
+print(apo2)
+apo_speed_current = vessel.orbit.orbital_speed_at(700000)
+print(vessel.orbit.body.name)
+print(vessel.met)
+print("Speed at Apo Currently", apo_speed_current)
+print(vessel.orbit.body.gravitational_parameter)
+print(vessel.orbit.apoapsis)
 
-
-# 000 005
-# 005 0010
-# 0010 0015
+orbit_gm = vessel.orbit.body.gravitational_parameter
+print("GM of Kerbin", orbit_gm)
+apo_of_orbit = vessel.orbit.apoapsis
+print("Apo of our Orbit from center of mass", apo_of_orbit)
+apo_speed_needed = math.sqrt(orbit_gm / apo_of_orbit)
+print("Velocity needed to orbit at apo", apo_speed_needed)

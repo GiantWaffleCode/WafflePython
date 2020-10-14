@@ -1,6 +1,7 @@
 import krpc
 import time
 import math
+import Landing
  #  change
 
 conn = krpc.connect(name="Orbital Test")
@@ -87,9 +88,15 @@ def orbit_burn():
     flow_rate = f / isp
     burn_time = (m0 - m1) / flow_rate
 
-    vessel.auto_pilot.reference_frame = node.reference_frame
-    vessel.auto_pilot.target_direction = (0, 1, 0)
-    vessel.auto_pilot.wait()
+    vessel.auto_pilot.disengage()
+    vessel.control.sas = True
+    time.sleep(1)
+    vessel.control.sas_mode = conn.space_center.SASMode.maneuver
+    time.sleep(2)
+
+    # vessel.auto_pilot.reference_frame = node.reference_frame
+    # vessel.auto_pilot.target_direction = (0, 1, 0)
+    # vessel.auto_pilot.wait()
 
     burn_ut = ut() + vessel.orbit.time_to_apoapsis - (burn_time / 2.)
     lead_time = 10
@@ -110,9 +117,13 @@ def orbit_burn():
     print("Stop Burn")
     vessel.control.throttle = 0
     node.remove()
-    vessel.auto_pilot.reference_frame = orb_frame
-    vessel.auto_pilot.target_direction = 0, 1, 0
-    vessel.auto_pilot.wait()
+    vessel.control.sas_mode = conn.space_center.SASMode.prograde
+    time.sleep(2)
+    vessel.control.sas = False
+
+    # vessel.auto_pilot.reference_frame = orb_frame
+    # vessel.auto_pilot.target_direction = 0, 1, 0
+    # vessel.auto_pilot.wait()
 
 
 def main_sequence(clicked):
@@ -123,6 +134,7 @@ def main_sequence(clicked):
         vessel.control.activate_next_stage()
         vessel.control.activate_next_stage()
         orbit_burn()
-        print("Done!")
+        vessel.auto_pilot.disengage()
+        print("In Orbit!")
     else:
         print("Waiting for Button")

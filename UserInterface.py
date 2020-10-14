@@ -1,6 +1,7 @@
 import krpc
 import time
 import Orbit
+import Landing
 import datetime
 
 conn = krpc.connect(name="UI Test")
@@ -29,7 +30,7 @@ def make_button(name, cord):  # Creates Text Objects
 
 
 button_launch = make_button("Launch", (0, rect.size[1]/2 - 50))
-# button_reset = make_button("Reset", (0, rect.size[1]/2 - 100))
+button_landing = make_button("Land", (0, rect.size[1]/2 - 100))
 
 
 def write_text(name, cord):  # Creates Text Objects
@@ -65,9 +66,9 @@ button_launch_clicked = conn.add_stream(getattr, button_launch, 'clicked')
 button_launch_clicked.add_callback(Orbit.main_sequence)
 button_launch_clicked.start()
 
-# button_reset_clicked = conn.add_stream(getattr, button_reset, 'clicked')
-# button_reset_clicked.add_callback(quick_load)
-# button_reset_clicked.start()
+button_landing_clicked = conn.add_stream(getattr, button_landing, 'clicked')
+button_landing_clicked.add_callback(Landing.main_sequence)
+button_landing_clicked.start()
 
 while True:
     vessel_roll = vessel.flight().roll  # Update Nav Object Text

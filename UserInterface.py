@@ -53,6 +53,9 @@ text_roll = write_text("Roll", (0, -20))  # Text Objects i want
 text_pitch = write_text("Pitch", (0, -40))
 text_heading = write_text("Heading", (0, -60))
 text_twr = write_text("TWR: Fix this Alan", (0, -80))
+text_ap_roll = write_text("AP Roll", (0, -120))  # Text Objects i want
+text_ap_pitch = write_text("AP Pitch", (0, -140))
+text_ap_heading = write_text("AP Heading", (0, -160))
 
 text_mission_time_label = write_text("Mission Time", (0, 100))
 text_mission_time = write_text("T ", (0, 75))
@@ -74,6 +77,12 @@ while True:
     vessel_heading = vessel.flight().heading
     text_heading.content = "Yaw: " + str(round(vessel_heading, 1))
     vessel_twr = Orbit.twr()
-    text_twr.content = "TWR: "+ str(round(vessel_twr, 3))
+    text_twr.content = "TWR: " + str(round(vessel_twr, 3))
     text_mission_time.content = "T: " + time.strftime('%H:%M:%S', time.gmtime(vessel.met))
+    vessel_ap_roll = vessel.auto_pilot.target_roll  # AP Heading
+    text_ap_roll.content = "AP Roll: " + str(round(vessel_ap_roll, 1))
+    vessel_ap_pitch = vessel.auto_pilot.target_pitch
+    text_ap_pitch.content = "AP Pitch: " + str(round(vessel_ap_pitch, 1))
+    vessel_ap_heading = vessel.auto_pilot.target_heading
+    text_ap_heading.content = "AP Yaw: " + str(round(vessel_ap_heading, 1))
     time.sleep(0.1)

@@ -1,6 +1,7 @@
 import krpc
 import time
 import datetime
+import math
 
 #Init
 conn = krpc.connect(name="UI Test")
@@ -112,10 +113,14 @@ while True:
     text_roll_current.content = f"{int(round(current_roll(),1))}"
     text_pitch_current.content = f"{int(round(current_pitch(), 0))}"
     text_heading_current.content = f"{int(round(current_heading(), 0))}"
-    text_roll_ap.content = f"{int(round(current_roll_ap(), 0))}"
+    if not math.isnan(current_roll_ap()):
+        text_roll_ap.content = f"{int(round(current_roll_ap(), 0))}"
+        text_roll_d.content = f"{abs(int(round(current_roll(),1)) - int(round(current_roll_ap(), 0)))}"
+    elif math.isnan(current_roll_ap()):
+        text_roll_ap.content = f"NaN"
+        text_roll_d.content = f"0"
     text_pitch_ap.content = f"{int(round(current_pitch_ap(), 0))}"
     text_heading_ap.content = f"{int(round(current_heading_ap(), 0))}"
-    text_roll_d.content = f"{abs(int(round(current_roll(),1)) - int(round(current_roll_ap(), 0)))}"
     text_pitch_d.content = f"{abs(int(round(current_pitch(),1)) - int(round(current_pitch_ap(), 0)))}"
     text_heading_d.content = f"{abs(int(round(current_heading(),1)) - int(round(current_heading_ap(), 0)))}"
     text_roll_d.color = deviation_color_ap(int(text_roll_d.content))

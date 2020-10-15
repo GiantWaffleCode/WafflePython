@@ -18,6 +18,10 @@ current_velocity = math.sqrt(gm*((2/current_radius)-(1/semi_major)))
 print(f"Current Velocity = {current_velocity}")
 
 
+
+
+
+
 body = vessel.orbit.body
 position = vessel.position(srf_frame)
 velocity = vessel.velocity(srf_frame)

@@ -1,0 +1,9 @@
+from typing import Any
+
+POS_INF: float
+NEG_INF: Any
+NAN: Any
+
+def bytelength(string: Any): ...
+def hexlify(value: Any): ...
+def unhexlify(data: Any): ...

@@ -29,7 +29,7 @@ vessel.control.sas = True
 time.sleep(.1)
 vessel.control.sas_mode = conn.space_center.SASMode.radial
 
-pid1 = PID(.01, 0.005, .1, setpoint=500)
+pid1 = PID(.01, 0.005, .1, setpoint=100)
 pid1.output_limits = (0, 1)
 pid1.sample_time = 0.01
 
@@ -42,10 +42,6 @@ vessel.control.throttle = 0
 while current_alt() < 300:
     print(current_alt())
     pass
-for i in range(400):
-    bottom_alt = max(0, current_alt() - abs(lowest()[0][0]))
-    vessel.control.throttle = pid1(bottom_alt)
-    time.sleep(.01)
 while True:
     bottom_alt = max(0, current_alt() - abs(lowest()[0][0]))
     vessel.control.throttle = pid1(bottom_alt)

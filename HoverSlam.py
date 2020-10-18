@@ -30,7 +30,8 @@ def bottom_altitude():
     return max(0, current_alt() - abs(lowest()[0][0]))
 
 
-vessel.parts.engines[0].gimbal_locked = True
+for engine in vessel.parts.engines:
+    engine.gimbal_locked = True
 
 while True:
     aero_amp = math.sqrt(current_aero()[0] ** 2
@@ -52,7 +53,7 @@ print(f"Switch to Stab")
 for leg in vessel.parts.legs:
     leg.deployed = True
 
-pid1 = PID(.15, 0, .35, setpoint=0)
+pid1 = PID(.15, 0, .5, setpoint=0)
 pid1.output_limits = (0, 1)
 pid1.sample_time = 0.01
 
